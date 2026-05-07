@@ -177,7 +177,8 @@ async function handleApi(req, res, pathname) {
     const email = String(input.email || "").trim().toLowerCase();
     if (!String(input.full_name || "").trim() || !email || !String(input.password || "").trim()) return json(res, 400, { error: "Name, email, and password are required" });
     if (db.users.some((u) => u.email === email)) return json(res, 409, { error: "Email already exists" });
-    const newUser = { id: id("usr"), full_name: input.full_name.trim(), email, role: db.users.length ? "user" : "admin", password_hash: hashPassword(input.password) };
+    const role = input.role === "admin" ? "admin" : "user";
+    const newUser = { id: id("usr"), full_name: input.full_name.trim(), email, role, password_hash: hashPassword(input.password) };
     db.users.push(newUser);
     writeDb(db);
     const sid = id("sid");
@@ -214,6 +215,19 @@ async function handleApi(req, res, pathname) {
       project_members: db.project_members,
       invites: authed.role === "admin" ? db.invites : []
     });
+  }
+
+  if (pathname === "/api/profile" && method === "PUT") {
+    const input = await body(req);
+    const fullName = String(input.full_name || "").trim();
+    if (!fullName) return json(res, 400, { error: "Name is required" });
+    const current = db.users.find((u) => u.email === authed.email);
+    if (!current) return json(res, 404, { error: "User not found" });
+    current.full_name = fullName;
+    db.tasks.filter((t) => t.assigned_to === current.email).forEach((t) => t.assigned_to_name = fullName);
+    db.project_members.filter((m) => m.user_email === current.email).forEach((m) => m.user_name = fullName);
+    writeDb(db);
+    return json(res, 200, { user: publicUser(current) });
   }
 
   if (pathname === "/api/users" && method === "GET") return json(res, 200, db.users.map(publicUser));

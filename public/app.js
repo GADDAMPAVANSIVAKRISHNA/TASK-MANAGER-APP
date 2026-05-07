@@ -43,11 +43,12 @@ function showAuth() {
 function showApp() {
   $("#auth").classList.add("hidden");
   $("#app").classList.remove("hidden");
-  $("#side-name").textContent = state.user.full_name;
-  $("#side-role").textContent = label(state.user.role);
-  $("#top-email").textContent = state.user.email;
-  $("#side-avatar").textContent = initial(state.user.full_name);
-  $("#top-avatar").textContent = initial(state.user.full_name);
+  $("#top-name").textContent = state.user.full_name;
+  $("#account-button").textContent = initial(state.user.full_name);
+  $("#menu-avatar").textContent = initial(state.user.full_name);
+  $("#menu-name").textContent = state.user.full_name;
+  $("#menu-role").textContent = label(state.user.role);
+  $("#menu-email").textContent = state.user.email;
   renderNav();
   syncThemeToggle();
   renderRoute();
@@ -66,6 +67,20 @@ function toggleTheme() {
   document.documentElement.dataset.theme = next;
   localStorage.setItem("task-manager-theme", next);
   syncThemeToggle();
+}
+
+function setStarterLogin(role) {
+  const credentials = {
+    admin: { email: "admin@taskflow.test", password: "admin123" },
+    member: { email: "maya@taskflow.test", password: "member123" }
+  }[role];
+  if (!credentials) return;
+  const form = $("#login-form");
+  form.email.value = credentials.email;
+  form.password.value = credentials.password;
+  document.querySelectorAll("[data-starter-login]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.starterLogin === role);
+  });
 }
 
 function navPath(path) {
@@ -334,10 +349,35 @@ function closeMobile() {
   $("#scrim").classList.remove("show");
 }
 
+function closeAccountMenu() {
+  $("#account-dropdown").classList.add("hidden");
+}
+
+function toggleAccountMenu() {
+  $("#account-dropdown").classList.toggle("hidden");
+}
+
+async function logout() {
+  await api("/api/auth/logout", { method: "POST" });
+  location.href = "/";
+}
+
+function profileForm() {
+  closeAccountMenu();
+  modal(`<div class="modal-panel"><div class="modal-head"><h3>Edit Profile</h3><button class="icon-btn" data-close>x</button></div>
+    <form id="profile-form" class="form">
+      <label>Full Name<input name="full_name" value="${escapeHtml(state.user.full_name)}" required></label>
+      <label>Email<input value="${escapeHtml(state.user.email)}" disabled></label>
+      <p class="subtle">Your email is used for task assignments, so only your display name can be changed here.</p>
+      <div class="actions"><button type="button" class="ghost-btn" data-close>Cancel</button><button class="primary-btn" type="submit">Save Profile</button></div>
+    </form></div>`);
+}
+
 document.addEventListener("click", async (e) => {
   const a = e.target.closest("a[href]");
   if (a && a.href.startsWith(location.origin)) { e.preventDefault(); go(new URL(a.href).pathname); }
   const goBtn = e.target.closest("[data-go]"); if (goBtn) go(goBtn.dataset.go);
+  const starter = e.target.closest("[data-starter-login]"); if (starter) setStarterLogin(starter.dataset.starterLogin);
   if (e.target.closest("[data-new-project]")) projectForm();
   const editProject = e.target.closest("[data-edit-project]"); if (editProject) projectForm(state.projects.find((p) => p.id === editProject.dataset.editProject));
   const deleteProject = e.target.closest("[data-delete-project]");
@@ -350,6 +390,8 @@ document.addEventListener("click", async (e) => {
   const editMember = e.target.closest("[data-edit-member]"); if (editMember) memberForm(state.users.find((u) => u.id === editMember.dataset.editMember));
   const deleteMember = e.target.closest("[data-delete-member]");
   if (deleteMember && confirm("Delete this team member? They must have no assigned tasks.")) { await api(`/api/users/${deleteMember.dataset.deleteMember}`, { method: "DELETE" }); toast("Team member deleted"); await refresh(); }
+  if (e.target.closest("[data-edit-profile]")) profileForm();
+  if (e.target.closest("[data-logout]")) await logout();
   if (e.target.closest(".card-actions")) return;
   const project = e.target.closest("[data-project]"); if (project) go(`/projects/${project.dataset.project}`);
   const task = e.target.closest("[data-task]"); if (task) taskDetail(state.tasks.find((t) => t.id === task.dataset.task));
@@ -359,6 +401,7 @@ document.addEventListener("click", async (e) => {
   if (invite) modal(`<div class="modal-panel"><div class="modal-head"><h3>Invite Member</h3><button class="icon-btn" data-close>×</button></div><form id="invite-form" class="form"><label>Email<input name="email" type="email" required></label><label>Role<select name="role"><option value="user">Member</option><option value="admin">Admin</option></select></label><div class="actions"><button type="button" class="ghost-btn" data-close>Cancel</button><button class="primary-btn">Send Invite</button></div></form></div>`);
   const swatch = e.target.closest("[data-swatch]");
   if (swatch) { $("#project-form [name=color]").value = swatch.dataset.swatch; document.querySelectorAll(".swatch").forEach((s) => s.classList.remove("active")); swatch.classList.add("active"); }
+  if (!e.target.closest(".account-menu")) closeAccountMenu();
 });
 
 document.addEventListener("change", async (e) => {
@@ -394,7 +437,7 @@ document.addEventListener("submit", async (e) => {
     }
     if (form.id === "signup-form") {
       await api("/api/auth/signup", { method: "POST", body: JSON.stringify(data) });
-      toast("Account created");
+      toast(data.role === "admin" ? "Admin account created" : "Member account created");
       return bootstrap();
     }
     if (form.id === "project-form") {
@@ -418,6 +461,13 @@ document.addEventListener("submit", async (e) => {
       closeModal();
       return refresh();
     }
+    if (form.id === "profile-form") {
+      const res = await api("/api/profile", { method: "PUT", body: JSON.stringify(data) });
+      state.user = res.user;
+      toast("Profile updated");
+      closeModal();
+      return refresh();
+    }
     if (form.id === "invite-form") {
       const res = await api("/api/team/invite", { method: "POST", body: JSON.stringify(data) });
       toast(res.message || "Invite sent");
@@ -429,9 +479,9 @@ document.addEventListener("submit", async (e) => {
 
 $("#login-tab").onclick = () => { $("#login-tab").classList.add("active"); $("#signup-tab").classList.remove("active"); $("#login-form").classList.remove("hidden"); $("#signup-form").classList.add("hidden"); };
 $("#signup-tab").onclick = () => { $("#signup-tab").classList.add("active"); $("#login-tab").classList.remove("active"); $("#signup-form").classList.remove("hidden"); $("#login-form").classList.add("hidden"); };
-$("#logout").onclick = async () => { await api("/api/auth/logout", { method: "POST" }); location.href = "/"; };
 $("#menu").onclick = () => { $("#sidebar").classList.add("open"); $("#scrim").classList.add("show"); };
 $("#theme-toggle").onclick = toggleTheme;
+$("#account-button").onclick = toggleAccountMenu;
 $("#scrim").onclick = closeMobile;
 window.onpopstate = () => { state.route = location.pathname; state.filters = {}; renderNav(); renderRoute(); };
 syncThemeToggle();

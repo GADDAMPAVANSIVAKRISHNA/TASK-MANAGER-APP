@@ -25,16 +25,28 @@
           <button id="signup-tab">Signup</button>
         </div>
         <form id="login-form" class="form">
+          <div class="role-login-grid">
+            <button type="button" class="role-login-card active" data-starter-login="admin">
+              <strong>Admin Login</strong>
+              <span>Full project, task, and team controls</span>
+            </button>
+            <button type="button" class="role-login-card" data-starter-login="member">
+              <strong>Member Login</strong>
+              <span>Assigned tasks and personal status updates</span>
+            </button>
+          </div>
           <label>Email<input name="email" type="email" value="admin@taskflow.test" required></label>
           <label>Password<input name="password" type="password" value="admin123" required></label>
           <button class="primary-btn" type="submit">Sign In</button>
-          <p class="hint">Starter admin: admin@taskflow.test / admin123<br>Starter member: maya@taskflow.test / member123</p>
+          <p class="hint">Use the starter role buttons above, or create your own Admin/Member account from Signup.</p>
         </form>
         <form id="signup-form" class="form hidden">
           <label>Full Name<input name="full_name" required></label>
           <label>Email<input name="email" type="email" required></label>
           <label>Password<input name="password" type="password" minlength="6" required></label>
+          <label>Account Role<select name="role"><option value="admin">Admin</option><option value="user" selected>Member</option></select></label>
           <button class="primary-btn" type="submit">Create Account</button>
+          <p class="hint">Choose Admin if you need project, task, and team management. Choose Member for assigned-task access.</p>
         </form>
       </div>
     </section>
@@ -43,14 +55,6 @@
         <div class="side-top">
           <a href="/" class="brand"><span class="logo">T</span><span>Task Manager</span></a>
           <nav id="nav"></nav>
-        </div>
-        <div class="side-user">
-          <div class="avatar" id="side-avatar">A</div>
-          <div>
-            <strong id="side-name">User</strong>
-            <span id="side-role">Member</span>
-          </div>
-          <button id="logout" class="ghost-btn">Sign Out</button>
         </div>
       </aside>
       <div id="scrim" class="scrim"></div>
@@ -62,8 +66,22 @@
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
             <span id="theme-label">Light</span>
           </button>
-          <span id="top-email" class="top-email"></span>
-          <div class="avatar" id="top-avatar">A</div>
+          <span id="top-name" class="top-name"></span>
+          <div class="account-menu">
+            <button id="account-button" class="avatar avatar-button" type="button" aria-label="Open account menu">A</button>
+            <div id="account-dropdown" class="account-dropdown hidden">
+              <div class="account-summary">
+                <div class="avatar" id="menu-avatar">A</div>
+                <div>
+                  <strong id="menu-name">User</strong>
+                  <span id="menu-role">Member</span>
+                </div>
+              </div>
+              <div class="account-email" id="menu-email"></div>
+              <button class="menu-action" type="button" data-edit-profile>Edit Profile</button>
+              <button class="menu-action danger-text" type="button" data-logout>Sign Out</button>
+            </div>
+          </div>
         </header>
         <div id="view" class="view"></div>
       </main>
