@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="toast"></div>
+    <section id="auth" class="auth-shell hidden">
+      <div class="auth-card">
+        <div class="brand-row">
+          <div class="logo">T</div>
+          <div>
+            <h1>Task Manager</h1>
+            <p>Team projects, tasks, and progress in one calm workspace.</p>
+          </div>
+        </div>
+        <div class="auth-tabs">
+          <button id="login-tab" class="active">Login</button>
+          <button id="signup-tab">Signup</button>
+        </div>
+        <form id="login-form" class="form">
+          <label>Email<input name="email" type="email" value="admin@taskflow.test" required></label>
+          <label>Password<input name="password" type="password" value="admin123" required></label>
+          <button class="primary-btn" type="submit">Sign In</button>
+          <p class="hint">Starter admin: admin@taskflow.test / admin123<br>Starter member: maya@taskflow.test / member123</p>
+        </form>
+        <form id="signup-form" class="form hidden">
+          <label>Full Name<input name="full_name" required></label>
+          <label>Email<input name="email" type="email" required></label>
+          <label>Password<input name="password" type="password" minlength="6" required></label>
+          <button class="primary-btn" type="submit">Create Account</button>
+        </form>
+      </div>
+    </section>
+    <section id="app" class="app-shell hidden">
+      <aside id="sidebar" class="sidebar">
+        <div class="side-top">
+          <a href="/" class="brand"><span class="logo">T</span><span>Task Manager</span></a>
+          <nav id="nav"></nav>
+        </div>
+        <div class="side-user">
+          <div class="avatar" id="side-avatar">A</div>
+          <div>
+            <strong id="side-name">User</strong>
+            <span id="side-role">Member</span>
+          </div>
+          <button id="logout" class="ghost-btn">Sign Out</button>
+        </div>
+      </aside>
+      <div id="scrim" class="scrim"></div>
+      <main class="main">
+        <header class="topbar">
+          <button id="menu" class="icon-btn mobile-only">☰</button>
+          <div></div>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span id="theme-label">Light</span>
+          </button>
+          <span id="top-email" class="top-email"></span>
+          <div class="avatar" id="top-avatar">A</div>
+        </header>
+        <div id="view" class="view"></div>
+      </main>
+    </section>
+
+    <dialog id="modal">
+      <div id="modal-body"></div>
+    </dialog>
+    <script src="/app.js"></script>
+  </body>
+</html>

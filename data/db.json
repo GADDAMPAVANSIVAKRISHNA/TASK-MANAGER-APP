@@ -1,0 +1,206 @@
+{
+  "users": [
+    {
+      "id": "usr_cfd0237c762c25c4",
+      "full_name": "Aarav Sharma",
+      "email": "admin@taskflow.test",
+      "role": "admin",
+      "password_hash": "bf9038e8d1b7048f78f0a33c427e6786:1eb08deb574a7fa75781f4e481e19c94b4bab165328f3cc7f9ba7392d6279579"
+    },
+    {
+      "id": "usr_64eca3556d36b9e1",
+      "full_name": "Maya Patel",
+      "email": "maya@taskflow.test",
+      "role": "user",
+      "password_hash": "bc9b2894ea560706f75b57ba3f599518:77647338f197190b981455b961cc4e394ecfba33418cd3e392a8b491b4ff9b3d"
+    },
+    {
+      "id": "usr_5a6004e6f6fbcdc9",
+      "full_name": "Rohan Mehta",
+      "email": "rohan@taskflow.test",
+      "role": "user",
+      "password_hash": "bc9b2894ea560706f75b57ba3f599518:77647338f197190b981455b961cc4e394ecfba33418cd3e392a8b491b4ff9b3d"
+    },
+    {
+      "id": "usr_d40d63b031974359",
+      "full_name": "GADDAM PAVAN SIVA KRISHNA",
+      "email": "gddmpvn24@gmail.com",
+      "role": "user",
+      "password_hash": "be1dfd772e9459451f7981ae864cc84a:67378a55e980b3a6951c9ef6f47d15a0e54047d809d616a9bfcc8024b56de055"
+    },
+    {
+      "id": "usr_8603be974e7459c7",
+      "full_name": "gddmpvn25",
+      "email": "gddmpvn25@gmail.com",
+      "role": "admin",
+      "password_hash": "aaf52794fea45d8e956087e9197b5fe1:f018a14c44270622f3de2fbc8371aaf3fd4cd55a9f705606cbdeb97a2635fa82"
+    }
+  ],
+  "projects": [
+    {
+      "id": "prj_4e58de1133545fa7",
+      "name": "Website Redesign",
+      "description": "Refresh the marketing pages, polish product flows, and prepare responsive layouts.",
+      "status": "active",
+      "color": "indigo",
+      "created_at": "2026-05-02T11:55:10.940Z"
+    },
+    {
+      "id": "prj_80f560b82e7af914",
+      "name": "Mobile App Launch",
+      "description": "Coordinate QA, release readiness, launch assets, and post-launch bug triage.",
+      "status": "active",
+      "color": "emerald",
+      "created_at": "2026-05-04T11:55:10.942Z"
+    },
+    {
+      "id": "prj_930cdd03dd1f040d",
+      "name": "Analytics Cleanup",
+      "description": "Audit dashboards, remove stale reports, and document metrics ownership.",
+      "status": "completed",
+      "color": "sky",
+      "created_at": "2026-04-28T11:55:10.942Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "tsk_d2e2d57183128be1",
+      "title": "Build dashboard cards",
+      "description": "Create responsive KPI cards for total, completed, active, and overdue tasks.",
+      "status": "done",
+      "priority": "high",
+      "due_date": "2026-05-05",
+      "assigned_to": "maya@taskflow.test",
+      "assigned_to_name": "Maya Patel",
+      "project_id": "prj_4e58de1133545fa7",
+      "project_name": "Website Redesign",
+      "created_at": "2026-05-03T11:55:10.942Z"
+    },
+    {
+      "id": "tsk_75dd39ad8526dcab",
+      "title": "Design project grid",
+      "description": "Make project cards scannable with color icons, status badges, and task counts.",
+      "status": "in_progress",
+      "priority": "medium",
+      "due_date": "2026-05-09",
+      "assigned_to": "rohan@taskflow.test",
+      "assigned_to_name": "Rohan Mehta",
+      "project_id": "prj_4e58de1133545fa7",
+      "project_name": "Website Redesign",
+      "created_at": "2026-05-04T11:55:10.942Z"
+    },
+    {
+      "id": "tsk_9791b487b9f68e6b",
+      "title": "QA signup flow",
+      "description": "Verify validations, error messages, and password hashing behavior.",
+      "status": "todo",
+      "priority": "urgent",
+      "due_date": "2026-05-06",
+      "assigned_to": "maya@taskflow.test",
+      "assigned_to_name": "Maya Patel",
+      "project_id": "prj_80f560b82e7af914",
+      "project_name": "Mobile App Launch",
+      "created_at": "2026-05-05T11:55:10.943Z"
+    },
+    {
+      "id": "tsk_286f8fc9e66d8946",
+      "title": "Prepare release checklist",
+      "description": "Collect store metadata, screenshots, rollback steps, and release owner contacts.",
+      "status": "in_progress",
+      "priority": "high",
+      "due_date": "2026-05-12",
+      "assigned_to": "admin@taskflow.test",
+      "assigned_to_name": "Aarav Sharma",
+      "project_id": "prj_80f560b82e7af914",
+      "project_name": "Mobile App Launch",
+      "created_at": "2026-05-06T11:55:10.943Z"
+    },
+    {
+      "id": "tsk_83de76b4d0baf1fe",
+      "title": "Archive unused charts",
+      "description": "Move deprecated dashboards into the archive and update owners.",
+      "status": "done",
+      "priority": "low",
+      "due_date": "2026-05-08",
+      "assigned_to": "rohan@taskflow.test",
+      "assigned_to_name": "Rohan Mehta",
+      "project_id": "prj_930cdd03dd1f040d",
+      "project_name": "Analytics Cleanup",
+      "created_at": "2026-05-01T11:55:10.943Z"
+    }
+  ],
+  "project_members": [
+    {
+      "id": "mem_50637d0b7e437d89",
+      "project_id": "prj_4e58de1133545fa7",
+      "user_email": "admin@taskflow.test",
+      "user_name": "Aarav Sharma",
+      "role": "owner"
+    },
+    {
+      "id": "mem_075e7a3a902b3e95",
+      "project_id": "prj_4e58de1133545fa7",
+      "user_email": "maya@taskflow.test",
+      "user_name": "Maya Patel",
+      "role": "member"
+    },
+    {
+      "id": "mem_7d90e01f53947493",
+      "project_id": "prj_4e58de1133545fa7",
+      "user_email": "rohan@taskflow.test",
+      "user_name": "Rohan Mehta",
+      "role": "member"
+    },
+    {
+      "id": "mem_8955ced1fcf8bb27",
+      "project_id": "prj_80f560b82e7af914",
+      "user_email": "admin@taskflow.test",
+      "user_name": "Aarav Sharma",
+      "role": "owner"
+    },
+    {
+      "id": "mem_7f6700b6b963f14a",
+      "project_id": "prj_80f560b82e7af914",
+      "user_email": "maya@taskflow.test",
+      "user_name": "Maya Patel",
+      "role": "member"
+    },
+    {
+      "id": "mem_3f07567c491a1973",
+      "project_id": "prj_80f560b82e7af914",
+      "user_email": "rohan@taskflow.test",
+      "user_name": "Rohan Mehta",
+      "role": "member"
+    },
+    {
+      "id": "mem_1eb46a9311fc394a",
+      "project_id": "prj_930cdd03dd1f040d",
+      "user_email": "admin@taskflow.test",
+      "user_name": "Aarav Sharma",
+      "role": "owner"
+    },
+    {
+      "id": "mem_a3723b1ae31b26a6",
+      "project_id": "prj_930cdd03dd1f040d",
+      "user_email": "maya@taskflow.test",
+      "user_name": "Maya Patel",
+      "role": "member"
+    },
+    {
+      "id": "mem_c20a89ebf9425da6",
+      "project_id": "prj_930cdd03dd1f040d",
+      "user_email": "rohan@taskflow.test",
+      "user_name": "Rohan Mehta",
+      "role": "member"
+    }
+  ],
+  "invites": [
+    {
+      "id": "inv_04f41de432b62a19",
+      "email": "gddmpvn25@gmail.com",
+      "role": "admin",
+      "sent_by": "admin@taskflow.test",
+      "created_at": "2026-05-07T12:13:07.541Z"
+    }
+  ]
+}

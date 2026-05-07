@@ -1,0 +1,16 @@
+{
+  "name": "taskflow",
+  "version": "1.0.0",
+  "description": "TaskFlow team task manager full-stack web app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "tasks",
+    "projects",
+    "team"
+  ],
+  "author": "",
+  "license": "MIT"
+}
